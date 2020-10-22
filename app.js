@@ -10,20 +10,20 @@ function app(people){
   switch(searchType){
     case 'yes':
       searchResults = searchByName(people);
-      break;
     case 'no':
       // TODO: search by traits
+      search
       break;
       default:
     app(people); // restart app
       break;
   }
-  //TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST
+  
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
-  mainMenu(searchResults, people);
+  mainMenu(searchResults, people); //[RDM]need to add check if there is multiple or single results... 
 }
 
-// Menu function to call once you find who you are looking for
+// Menu function to call once you find who you are looking for !!!
 function mainMenu(person, people){
 
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
@@ -37,7 +37,7 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-    // TODO: get person's info
+    // TODO: get person's info display person(person)
     break;
     case "family":
     // TODO: get person's family
@@ -57,8 +57,7 @@ function mainMenu(person, people){
 
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
-  let lastName = promptFor("What is the person's last name?", chars);
-
+  let lastName = promptFor("What is the person's last name?", chars); 
   let foundPerson = people.filter(function(person){
     if(person.firstName === firstName && person.lastName === lastName){
       return true;
@@ -68,6 +67,7 @@ function searchByName(people){
     }
   })
   // TODO: find the person using the name they entered
+  
   return foundPerson;
 }
 
@@ -109,4 +109,143 @@ function yesNo(input){
 // helper function to pass in as default promptFor validation
 function chars(input){
   return true; // default validation only
+}
+
+//[RDM] created first set of search criteria
+//serach by height - [RDM] tested and works for t/f
+//Need to create a funtion to ask the questions and pass arguements to app(people)
+
+
+function searchByHeight(people){
+  let height = promptFor("What is the person's height?", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.height === height){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  // TODO: find the person using the height they entered
+    return foundPerson;
+}
+
+//serach by weight
+function searchByWeight(people){
+  let weight = promptFor("What is the person's weight?", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.weight === weight){ //string convert or ==
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  // TODO: find the person using the height they entered
+    return foundPerson;
+}
+
+//serach by age
+function searchByAge(people){
+  let age = promptFor("What is the person's age?", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.age === age){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  // TODO: find the person using the height they entered
+    return foundPerson;
+}
+
+//search by gneder
+function searchByGemder(people){
+  let gender = promptFor("What is the person's gender?", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.height === gender){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  // TODO: find the person using the height they entered
+    return foundPerson;
+}
+
+//search by DOB
+function searchByDOB(people){
+  let DOB = promptFor("What is the person's DOB?", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.height === DOB){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  // TODO: find the person using the height they entered
+    return foundPerson;
+}
+
+//search by Eye color
+function searchByEyeColor(people){
+  let eyeColor = promptFor("What is the person's eye color?", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.height === eyeColor){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  // TODO: find the person using the height they entered
+    return foundPerson;
+}
+
+//search by occupation
+function searchByOccupation(people){
+  let occupation = promptFor("What is the person's eye color?", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.height === occupation){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  // TODO: find the person using the height they entered
+    return foundPerson;
+}
+
+//search by parents
+function searchByOccupation(people){
+  let parents = promptFor("What is the person's parents?", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.height === parents){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  // TODO: find the person using the height they entered
+    return foundPerson;
+}
+
+//search by current spouse
+function searchByCurrentSpouse(people){
+  let currentSpouse = promptFor("What is the person's parents?", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.height === currentSpouse){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  // TODO: find the person using the height they entered
+    return foundPerson;
 }
