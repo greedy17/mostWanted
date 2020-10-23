@@ -37,10 +37,10 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-    // TODO: get person's info
+    displayPerson(person);
     break;
     case "family":
-    // TODO: get person's family
+    displayFamily(person); // TODO: get person's family
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -56,8 +56,8 @@ function mainMenu(person, people){
 }
 
 function searchByName(people){
-  let firstName = promptFor("What is the person's first name?", chars);
-  let lastName = promptFor("What is the person's last name?", chars);
+  let firstName = promptFor("What is the person's first name?", chars).toLowerCase();
+  let lastName = promptFor("What is the person's last name?", chars).toLowerCase();
 
   let foundPerson = people.filter(function(person){
     if(person.firstName === firstName && person.lastName === lastName){
@@ -79,18 +79,27 @@ function displayPeople(people){
 }
 
 function displayPerson(person){
-  let personInfo = "Id: " + person.id + "\n";
-  personInfo += "First Name: " + person.firstName + "\n";
+  let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
   personInfo += "Gender: " + person.gender + "\n";
   personInfo += "DOB: " + person.dob + "\n";
   personInfo += "Height: " + person.height + "\n";
   personInfo += "Weight: " + person.weight + "\n";
   personInfo += "Eye color: " + person.eyeColor + "\n";
-  personInfo += "Occupation: " + person.occupation + "\n";
-  personInfo += "Parents: " + person.parents + "\n";
-  personInfo += "CurrentSpouse: " + person.currentSpouse + "\n";
+  personInfo += "Occupation: " + person.occupation;
+
   alert(personInfo);
+}
+
+function displayFamily(person){
+  let familyMembers = people.filter(function(object){
+    if(person.lastName === object.lastName){
+      return true;
+    }else{
+      return false;
+    }
+  })
+  displayPeople(familyMembers);
 }
 
 // function that prompts and validates user input
