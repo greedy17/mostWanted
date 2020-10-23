@@ -10,9 +10,9 @@ function app(people){
   switch(searchType){
     case 'yes':
       searchResults = searchByName(people);
+      break;
     case 'no':
       // TODO: search by traits
-      search
       break;
       default:
     app(people); // restart app
@@ -37,11 +37,7 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-<<<<<<< HEAD
     displayPerson(person);
-=======
-    // TODO: get person's info display person(person)
->>>>>>> d27f0881322ff5d4f92f2d337666e1bcb8ed79fd
     break;
     case "family":
     displayFamily(person); // TODO: get person's family
@@ -60,14 +56,9 @@ function mainMenu(person, people){
 }
 
 function searchByName(people){
-<<<<<<< HEAD
-  let firstName = promptFor("What is the person's first name?", chars).toLowerCase();
-  let lastName = promptFor("What is the person's last name?", chars).toLowerCase();
-
-=======
   let firstName = promptFor("What is the person's first name?", chars);
-  let lastName = promptFor("What is the person's last name?", chars); 
->>>>>>> d27f0881322ff5d4f92f2d337666e1bcb8ed79fd
+  let lastName = promptFor("What is the person's last name?", chars);
+
   let foundPerson = people.filter(function(person){
     if(person.firstName === firstName && person.lastName === lastName){
       return true;
@@ -77,8 +68,8 @@ function searchByName(people){
     }
   })
   // TODO: find the person using the name they entered
-  
-  return foundPerson;
+
+    return foundPerson[0];
 }
 
 // alerts a list of people
@@ -101,16 +92,16 @@ function displayPerson(person){
   alert(personInfo);
 }
 
-function displayFamily(person){
-  let familyMembers = people.filter(function(object){
-    if(person.lastName === object.lastName){
-      return true;
-    }else{
-      return false;
+/*function displayFamily(person){
+  let familyMembers = [];
+  for(let i = 0; i < people.length; i ++){
+    if(i.lastName === person.lastName){
+      familyMembers.push(i);
     }
-  })
-  displayPeople(familyMembers);
-}
+  }
+  alert(familyMembers);
+} 
+[ELR] working on function to display family members. Needs work.*/ 
 
 // function that prompts and validates user input
 function promptFor(question, valid){
@@ -179,7 +170,7 @@ function searchByAge(people){
     return foundPerson;
 }
 
-//search by gneder
+//search by gender
 function searchByGemder(people){
   let gender = promptFor("What is the person's gender?", chars);
   let foundPerson = people.filter(function(person){
