@@ -44,7 +44,7 @@ function mainMenu(person, people){
     findSpouse(people, person);
     break;
     case "descendants":
-    // TODO: get person's descendants
+    findDescendants(people, person);
     break;
     case "restart":
     app(people); // restart
@@ -261,7 +261,7 @@ function findSpouse(people, person){
   if(mySpouse.length > 0){
     alert("Spouse: " + mySpouse[0].firstName + " " + mySpouse[0].lastName);
   }else{
-    alert(person.firstName + " has no spouse on record.");
+    alert(person.firstName + " has no spouse on file.");
   }
 }
 
@@ -275,7 +275,7 @@ function findParents(people, person){
   })
 
   if(myParents.length === 0){
-    alert(person.firstName + " does not have any parents on record.")
+    alert(person.firstName + " does not have any parents on file.")
   }
 
   for(let i = 0; i < myParents.length; i++){
@@ -297,7 +297,7 @@ function findSiblings(people, person){
   })
 
 if(mySiblings.length === 0){
-  alert(person.firstName + " does not have any siblings on record.");
+  alert(person.firstName + " does not have any siblings on file.");
 }
 
 for(let i = 0; i < mySiblings.length; i++){
@@ -307,4 +307,27 @@ for(let i = 0; i < mySiblings.length; i++){
     alert("Sister: " + mySiblings[i].firstName + " " + mySiblings[i].lastName);
   }
 }
+}
+
+function findDescendants(people, person){
+  let myDescendants = people.filter(function(i){
+    if(person.id === i.parents[0] || person.id === i.parents[1]){
+      return true;
+    }else{
+      return false;
+    }
+  })
+
+  if(myDescendants.length === 0){
+    alert(person.firstName + " does not have any descendants on file.");
+  }
+  
+  for(let i = 0; i < myDescendants.length; i++){
+    if(myDescendants[i].gender === "male"){
+      alert("Son: " + myDescendants[i].firstName + " " + myDescendants[i].lastName);
+    }else{
+      alert("Daughter: " + myDescendants[i].firstName + " " + myDescendants[i].lastName);
+    }
+  }
+
 }
