@@ -40,7 +40,7 @@ function mainMenu(person, people){
     displayPerson(person);
     break;
     case "family":
-    displayFamily(person); // TODO: get person's family
+    findParents(people, person); // TODO: get person's family
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -93,15 +93,16 @@ function displayPerson(person){
 }
 
 /*function displayFamily(person){
-  let familyMembers = [];
-  for(let i = 0; i < people.length; i ++){
-    if(i.lastName === person.lastName){
-      familyMembers.push(i);
+  let familyMembers = displayPeople(people).filter(function(i){
+    if(person.lastName === i.lastName){
+      return true;
+    }else{
+      return false;
     }
-  }
-  alert(familyMembers);
-} 
-[ELR] working on function to display family members. Needs work.*/ 
+  })
+
+  return familyMembers;
+}*/
 
 // function that prompts and validates user input
 function promptFor(question, valid){
@@ -258,4 +259,16 @@ function searchByCurrentSpouse(people){
   })
   // TODO: find the person using the height they entered
     return foundPerson;
+}
+
+function findSpouse(people, person){
+  let mySpouse = people.filter(function(i){
+    if (i.currentSpouse === person.id){
+      return true;
+    }else{
+      return false;
+    }
+  })
+
+  alert("Spouse: " + mySpouse[0].firstName + " " + mySpouse[0].lastName);
 }
