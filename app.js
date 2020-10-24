@@ -18,7 +18,6 @@ function app(people){
     app(people); // restart app
       break;
   }
-  
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people); //[RDM]need to add check if there is multiple or single results... 
 }
@@ -91,18 +90,6 @@ function displayPerson(person){
 
   alert(personInfo);
 }
-
-/*function displayFamily(person){
-  let familyMembers = displayPeople(people).filter(function(i){
-    if(person.lastName === i.lastName){
-      return true;
-    }else{
-      return false;
-    }
-  })
-
-  return familyMembers;
-}*/
 
 // function that prompts and validates user input
 function promptFor(question, valid){
@@ -271,4 +258,22 @@ function findSpouse(people, person){
   })
 
   alert("Spouse: " + mySpouse[0].firstName + " " + mySpouse[0].lastName);
+}
+
+function findParents(people, person){
+  let myParents = people.filter(function(i){
+    if (person.parents[0] === i.id || person.parents[1] === i.id){
+      return true;
+    }else{
+      return false;
+    }
+  })
+    console.log(myParents);
+    for(let i = 0; i < myParents.length; i++){
+      if(myParents[i].gender === "male"){
+        alert("Father: " + myParents[i].firstName + " " + myParents[i].lastName);
+      }else{
+        alert("Mother: " + myParents[i].firstName + " " + myParents[i].lastName);
+      }
+    }
 }
