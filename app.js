@@ -39,7 +39,7 @@ function mainMenu(person, people){
     displayPerson(person);
     break;
     case "family":
-    findParents(people, person); // TODO: get person's family
+    findSiblings(people, person); // TODO: get person's family
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -276,4 +276,24 @@ function findParents(people, person){
         alert("Mother: " + myParents[i].firstName + " " + myParents[i].lastName);
       }
     }
+}
+
+function findSiblings(people, person){
+  let mySiblings = people.filter(function(i){
+    if (i.parents[0] === person.parents[0] || i.parents[1] === person.parents[1]){
+      return true;
+    }else{
+      return false;
+    }
+  })
+
+  for(let i = 0; i < mySiblings.length; i++){
+    if(mySiblings[i].id === person.id){
+      alert("The following individuals are " + person.lastName + "'s siblings. If nothing follow's this message, then " + person.lastName + " has no siblings on record.");
+    }else if(mySiblings[i].gender === "male"){
+      alert("Brother: " + mySiblings[i].firstName + " " + mySiblings[i].lastName);
+    }else{
+      alert("Sister: " + mySiblings[i].firstName + " " + mySiblings[i].lastName);
+    }
+  }
 }
