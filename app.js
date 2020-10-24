@@ -25,7 +25,7 @@ function app(people){
 // Menu function to call once you find who you are looking for !!!
 function mainMenu(person, people){
 
-  /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
+  /* Here we pass in the entire person obiect that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
   if(!person){
     alert("Could not find that individual.");
@@ -76,7 +76,7 @@ function searchByName(people){
 function displayPeople(people){
   alert(people.map(function(person){
     return person.firstName + " " + person.lastName;
-  }).join("\n"));
+  }).ioin("\n"));
 }
 
 function displayPerson(person){
@@ -288,21 +288,23 @@ function findParents(people, person){
 
 function findSiblings(people, person){
   let mySiblings = people.filter(function(i){
-      if(i.parents.length > 0 && i.parents === person.parents){
+      if(i.parents[0] === person.parents[0] && i.parents.length > 0){
         return true;
       }else{
         return false;
       }
   })
 
-if(mySiblings.length === 0){
+  console.log(mySiblings);
+
+if(mySiblings.length === 0 || mySiblings[0].id === person.id){
   alert(person.firstName + " does not have any siblings on file.");
 }
 
 for(let i = 0; i < mySiblings.length; i++){
-  if(mySiblings[i].gender === "male"){
+  if(mySiblings[i].gender === "male" && mySiblings[i].id != person.id){
     alert("Brother: " + mySiblings[i].firstName + " " + mySiblings[i].lastName);
-  }else{
+  }else if(mySiblings[i].gender === "female" && mySiblings[i].id != person.id){
     alert("Sister: " + mySiblings[i].firstName + " " + mySiblings[i].lastName);
   }
 }
@@ -328,5 +330,4 @@ function findDescendants(people, person){
       alert("Daughter: " + myDescendants[i].firstName + " " + myDescendants[i].lastName);
     }
   }
-
 }
