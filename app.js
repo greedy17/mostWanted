@@ -39,7 +39,9 @@ function mainMenu(person, people){
     displayPerson(person);
     break;
     case "family":
-    findSiblings(people, person); // TODO: get person's family
+    findParents(people,person);
+    findSiblings(people, person);
+    findSpouse(people, person);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -256,8 +258,11 @@ function findSpouse(people, person){
       return false;
     }
   })
-
-  alert("Spouse: " + mySpouse[0].firstName + " " + mySpouse[0].lastName);
+  if(mySpouse.length > 0){
+    alert("Spouse: " + mySpouse[0].firstName + " " + mySpouse[0].lastName);
+  }else{
+    alert(person.firstName + " has no spouse on record.");
+  }
 }
 
 function findParents(people, person){
@@ -268,32 +273,38 @@ function findParents(people, person){
       return false;
     }
   })
-    console.log(myParents);
-    for(let i = 0; i < myParents.length; i++){
-      if(myParents[i].gender === "male"){
-        alert("Father: " + myParents[i].firstName + " " + myParents[i].lastName);
-      }else{
-        alert("Mother: " + myParents[i].firstName + " " + myParents[i].lastName);
-      }
+
+  if(myParents.length === 0){
+    alert(person.firstName + " does not have any parents on record.")
+  }
+
+  for(let i = 0; i < myParents.length; i++){
+    if(myParents[i].gender === "male"){
+      alert("Father: " + myParents[i].firstName + " " + myParents[i].lastName);
+    }else{
+      alert("Mother: " + myParents[i].firstName + " " + myParents[i].lastName);
     }
+  }
 }
 
 function findSiblings(people, person){
   let mySiblings = people.filter(function(i){
-    if (i.parents[0] === person.parents[0] || i.parents[1] === person.parents[1]){
-      return true;
-    }else{
-      return false;
-    }
+      if(i.parents.length > 0 && i.parents === person.parents){
+        return true;
+      }else{
+        return false;
+      }
   })
 
-  for(let i = 0; i < mySiblings.length; i++){
-    if(mySiblings[i].id === person.id){
-      alert("The following individuals are " + person.lastName + "'s siblings. If nothing follow's this message, then " + person.lastName + " has no siblings on record.");
-    }else if(mySiblings[i].gender === "male"){
-      alert("Brother: " + mySiblings[i].firstName + " " + mySiblings[i].lastName);
-    }else{
-      alert("Sister: " + mySiblings[i].firstName + " " + mySiblings[i].lastName);
-    }
+if(mySiblings.length === 0){
+  alert(person.firstName + " does not have any siblings on record.");
+}
+
+for(let i = 0; i < mySiblings.length; i++){
+  if(mySiblings[i].gender === "male"){
+    alert("Brother: " + mySiblings[i].firstName + " " + mySiblings[i].lastName);
+  }else{
+    alert("Sister: " + mySiblings[i].firstName + " " + mySiblings[i].lastName);
   }
+}
 }
