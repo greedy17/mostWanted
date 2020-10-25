@@ -12,12 +12,13 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      // TODO: search by traits
+      searchResults = searchByTraits(people); // TODO: search by traits
       break;
       default:
     app(people); // restart app
       break;
   }
+
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people); //[RDM]need to add check if there is multiple or single results... 
 }
@@ -39,9 +40,7 @@ function mainMenu(person, people){
     displayPerson(person);
     break;
     case "family":
-    findParents(people,person);
-    findSiblings(people, person);
-    findSpouse(people, person);
+    findFamily(people,person);
     break;
     case "descendants":
     findDescendants(people, person);
@@ -110,142 +109,85 @@ function chars(input){
   return true; // default validation only
 }
 
-//[RDM] created first set of search criteria
-//serach by height - [RDM] tested and works for t/f
-//Need to create a funtion to ask the questions and pass arguements to app(people)
-
-
-function searchByHeight(people){
-  let height = promptFor("What is the person's height?", chars);
-  let foundPerson = people.filter(function(person){
-    if(person.height === height){
-      return true;
-    }
-    else{
-      return false;
-    }
-  })
-  // TODO: find the person using the height they entered
-    return foundPerson;
-}
-
-//serach by weight
-function searchByWeight(people){
-  let weight = promptFor("What is the person's weight?", chars);
-  let foundPerson = people.filter(function(person){
-    if(person.weight === weight){ //string convert or ==
-      return true;
-    }
-    else{
-      return false;
-    }
-  })
-  // TODO: find the person using the height they entered
-    return foundPerson;
-}
-
-//serach by age
-function searchByAge(people){
-  let age = promptFor("What is the person's age?", chars);
-  let foundPerson = people.filter(function(person){
-    if(person.age === age){
-      return true;
-    }
-    else{
-      return false;
-    }
-  })
-  // TODO: find the person using the height they entered
-    return foundPerson;
-}
-
-//search by gender
-function searchByGemder(people){
+function searchByGender(people){
   let gender = promptFor("What is the person's gender?", chars);
   let foundPerson = people.filter(function(person){
-    if(person.height === gender){
+    if(person.gender === gender){
       return true;
     }
     else{
       return false;
     }
   })
-  // TODO: find the person using the height they entered
-    return foundPerson;
+  return foundPerson;
 }
 
-//search by DOB
 function searchByDOB(people){
-  let DOB = promptFor("What is the person's DOB?", chars);
+  let DOB = promptFor("What is the person's DOB? m/d/yyyy", chars);
   let foundPerson = people.filter(function(person){
-    if(person.height === DOB){
+    if(person.dob === DOB){
       return true;
     }
     else{
       return false;
     }
   })
-  // TODO: find the person using the height they entered
     return foundPerson;
 }
 
-//search by Eye color
 function searchByEyeColor(people){
   let eyeColor = promptFor("What is the person's eye color?", chars);
   let foundPerson = people.filter(function(person){
-    if(person.height === eyeColor){
+    if(person.eyeColor === eyeColor){
       return true;
     }
     else{
       return false;
     }
   })
-  // TODO: find the person using the height they entered
     return foundPerson;
 }
 
-//search by occupation
-function searchByOccupation(people){
-  let occupation = promptFor("What is the person's eye color?", chars);
+function searchByEyesAndGender(people){
+  let eyeColor = promptFor("What is the person's eye color?", chars);
+  let gender = promptFor("What is the person's gender?", chars);
   let foundPerson = people.filter(function(person){
-    if(person.height === occupation){
+    if(person.eyeColor === eyeColor && person.gender === gender){
       return true;
     }
     else{
       return false;
     }
   })
-  // TODO: find the person using the height they entered
     return foundPerson;
 }
 
-//search by parents
-function searchByOccupation(people){
-  let parents = promptFor("What is the person's parents?", chars);
+function searchByEyesAndDOB(people){
+  let eyeColor = promptFor("What is the person's eye color?", chars);
+  let DOB = promptFor("What is the person's dob?", chars);
   let foundPerson = people.filter(function(person){
-    if(person.height === parents){
+    if(person.eyeColor === eyeColor && person.dob === DOB){
       return true;
     }
     else{
       return false;
     }
   })
-  // TODO: find the person using the height they entered
-    return foundPerson;
+    for(let i = 0; i < foundPerson.length; i++)
+    return foundPerson[i];
 }
 
-//search by current spouse
-function searchByCurrentSpouse(people){
-  let currentSpouse = promptFor("What is the person's parents?", chars);
+function searchByGenderAndDOB(people){
+  let DOB = promptFor("What is the person's dob?", chars);
+  let gender = promptFor("What is the person's gender?", chars);
   let foundPerson = people.filter(function(person){
-    if(person.height === currentSpouse){
+    if(person.dob === DOB && person.gender === gender){
       return true;
     }
     else{
       return false;
     }
   })
-  // TODO: find the person using the height they entered
     return foundPerson;
 }
 
@@ -272,11 +214,9 @@ function findParents(people, person){
       return false;
     }
   })
-
   if(myParents.length === 0){
     alert(person.firstName + " does not have any parents on file.")
   }
-
   for(let i = 0; i < myParents.length; i++){
     if(myParents[i].gender === "male"){
       alert("Father: " + myParents[i].firstName + " " + myParents[i].lastName);
@@ -294,20 +234,16 @@ function findSiblings(people, person){
         return false;
       }
   })
-
-  console.log(mySiblings);
-
-if(mySiblings.length === 0 || mySiblings[0].id === person.id){
-  alert(person.firstName + " does not have any siblings on file.");
-}
-
-for(let i = 0; i < mySiblings.length; i++){
-  if(mySiblings[i].gender === "male" && mySiblings[i].id != person.id){
-    alert("Brother: " + mySiblings[i].firstName + " " + mySiblings[i].lastName);
-  }else if(mySiblings[i].gender === "female" && mySiblings[i].id != person.id){
-    alert("Sister: " + mySiblings[i].firstName + " " + mySiblings[i].lastName);
+  if(mySiblings.length === 0 || mySiblings[0].id === person.id){
+    alert(person.firstName + " does not have any siblings on file.");
   }
-}
+  for(let i = 0; i < mySiblings.length; i++){
+    if(mySiblings[i].gender === "male" && mySiblings[i].id != person.id){
+      alert("Brother: " + mySiblings[i].firstName + " " + mySiblings[i].lastName);
+    }else if(mySiblings[i].gender === "female" && mySiblings[i].id != person.id){
+      alert("Sister: " + mySiblings[i].firstName + " " + mySiblings[i].lastName);
+    }
+  }
 }
 
 function findDescendants(people, person){
@@ -318,11 +254,9 @@ function findDescendants(people, person){
       return false;
     }
   })
-
   if(myDescendants.length === 0){
     alert(person.firstName + " does not have any descendants on file.");
-  }
-  
+  } 
   for(let i = 0; i < myDescendants.length; i++){
     if(myDescendants[i].gender === "male"){
       alert("Son: " + myDescendants[i].firstName + " " + myDescendants[i].lastName);
@@ -331,3 +265,31 @@ function findDescendants(people, person){
     }
   }
 }
+
+function findFamily(people, person){
+  findParents(people,person);
+  findSiblings(people, person);
+  findSpouse(people, person);
+}
+
+function searchByTraits(people){
+  let trait = prompt("Lets try a different approach. Search by: 'eye color', 'gender', 'dob', 'eyes and gender', 'eyes and dob', or 'gender and dob'?");
+  if(trait === "eye color"){
+    searchByEyeColor(people);
+    }else if(trait === "gender"){
+    searchByGender(people);
+    }else if(trait === "dob"){
+    searchByDOB(people);
+    }else if(trait === "eyes and gender"){
+    searchByEyesAndGender(people);
+    }else if(trait === "eyes and dob"){
+    searchByEyesAndDOB(people);
+    }else if(trait === "gender and dob"){
+    searchByGenderAndDOB(people);
+    }else{
+    alert("Invalid selection");
+    searchByTraits(people);
+    }
+}
+
+
