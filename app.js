@@ -19,8 +19,16 @@ function app(people){
       break;
   }
 
+  if(searchResults.length === 1){
+    searchResults = searchResults[0];
+  }else if(searchResults.length > 1){
+    for(let i = 0; i < searchResults.length; i++){
+      alert(searchResults[i][0]);
+    }
+  }
+
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
-  mainMenu(searchResults, people); //[RDM]need to add check if there is multiple or single results... 
+  mainMenu(searchResults, people);
 }
 
 // Menu function to call once you find who you are looking for !!!
@@ -67,8 +75,8 @@ function searchByName(people){
       return false;
     }
   })
-
-    return foundPerson[0];
+    console.log(foundPerson);
+    return foundPerson;
 }
 
 // alerts a list of people
@@ -119,11 +127,13 @@ function searchByGender(people){
       return false;
     }
   })
+  console.log(foundPerson);
   return foundPerson;
+
 }
 
 function searchByDOB(people){
-  let DOB = promptFor("What is the person's DOB? m/d/yyyy", chars);
+  let DOB = promptFor("What is the person's DOB? M/D/YYYY", chars);
   let foundPerson = people.filter(function(person){
     if(person.dob === DOB){
       return true;
@@ -132,6 +142,7 @@ function searchByDOB(people){
       return false;
     }
   })
+    console.log(foundPerson);
     return foundPerson;
 }
 
@@ -145,6 +156,7 @@ function searchByEyeColor(people){
       return false;
     }
   })
+    console.log(foundPerson);
     return foundPerson;
 }
 
@@ -159,6 +171,7 @@ function searchByEyesAndGender(people){
       return false;
     }
   })
+    console.log(foundPerson);
     return foundPerson;
 }
 
@@ -173,8 +186,8 @@ function searchByEyesAndDOB(people){
       return false;
     }
   })
-    for(let i = 0; i < foundPerson.length; i++)
-    return foundPerson[i];
+    console.log(foundPerson);
+    return foundPerson;
 }
 
 function searchByGenderAndDOB(people){
@@ -188,6 +201,7 @@ function searchByGenderAndDOB(people){
       return false;
     }
   })
+    console.log(foundPerson);
     return foundPerson;
 }
 
@@ -274,6 +288,7 @@ function findFamily(people, person){
 
 function searchByTraits(people){
   let trait = prompt("Lets try a different approach. Search by: 'eye color', 'gender', 'dob', 'eyes and gender', 'eyes and dob', or 'gender and dob'?");
+
   if(trait === "eye color"){
     searchByEyeColor(people);
     }else if(trait === "gender"){
