@@ -27,7 +27,7 @@ function app(people){
       searchResults = searchByGenderAndDOB(people);
       }else{
       alert("Invalid selection");
-      searchByTraits(people);
+      app(people);
       }
       break;
       default:
@@ -158,8 +158,13 @@ function searchByDOB(people){
       return false;
     }
   })
-    console.log(foundPerson);
-    return foundPerson;
+    if(foundPerson.length > 0){
+      return foundPerson;
+    }else{
+      alert("No one in the database matches that criteria.");
+      searchByDOB(people);
+    }
+    
 }
 
 function searchByEyeColor(people){
@@ -172,8 +177,12 @@ function searchByEyeColor(people){
       return false;
     }
   })
-    console.log(foundPerson);
+  if(foundPerson.length > 0){
     return foundPerson;
+  }else{
+    alert("No one in the database matches that criteria.");
+    searchByEyeColor(people);
+  }
 }
 
 function searchByEyesAndGender(people){
@@ -202,8 +211,12 @@ function searchByEyesAndDOB(people){
       return false;
     }
   })
-    console.log(foundPerson);
+  if(foundPerson.length > 0){
     return foundPerson;
+  }else{
+    alert("No one in the database matches that criteria.");
+    searchByEyesAndDOB(people);
+  }
 }
 
 function searchByGenderAndDOB(people){
@@ -217,8 +230,12 @@ function searchByGenderAndDOB(people){
       return false;
     }
   })
-    console.log(foundPerson);
+  if(foundPerson.length > 0){
     return foundPerson;
+  }else{
+    alert("No one in the database matches that criteria.");
+    searchByGenderAndDOB(people);
+  }
 }
 
 function findSpouse(people, person){
