@@ -12,20 +12,36 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      searchResults = searchByTraits(people); // TODO: search by traits
+      let trait = promptFor("Lets try a different approach. Search by: 'eye color', 'gender', 'dob', 'eyes and gender', 'eyes and dob', or 'gender and dob'?", chars).toLowerCase();
+      if(trait === "eye color"){
+      searchResults = searchByEyeColor(people);
+      }else if(trait === "gender"){
+      searchResults = searchByGender(people);
+      }else if(trait === "dob"){
+      searchResults = searchByDOB(people);
+      }else if(trait === "eyes and gender"){
+      searchResults = searchByEyesAndGender(people);
+      }else if(trait === "eyes and dob"){
+      searchResults = searchByEyesAndDOB(people);
+      }else if(trait === "gender and dob"){
+      searchResults = searchByGenderAndDOB(people);
+      }else{
+      alert("Invalid selection");
+      searchByTraits(people);
+      }
       break;
       default:
-    app(people); // restart app
+    app(people);
       break;
   }
 
   if(searchResults.length === 1){
     searchResults = searchResults[0];
   }else if(searchResults.length > 1){
-    for(let i = 0; i < searchResults.length; i++){
-      alert(searchResults[i][0]);
+    alert("The following is a list of individuals that match that criteria. To view more information about one of them, please use the search by name feature.");
+    displayPeople(searchResults);
+    app(people);
     }
-  }
 
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
@@ -83,7 +99,7 @@ function searchByName(people){
 function displayPeople(people){
   alert(people.map(function(person){
     return person.firstName + " " + person.lastName;
-  }).ioin("\n"));
+  }));
 }
 
 function displayPerson(person){
@@ -118,7 +134,7 @@ function chars(input){
 }
 
 function searchByGender(people){
-  let gender = promptFor("What is the person's gender?", chars);
+  let gender = promptFor("What is the person's gender?", chars).toLowerCase();
   let foundPerson = people.filter(function(person){
     if(person.gender === gender){
       return true;
@@ -285,26 +301,3 @@ function findFamily(people, person){
   findSiblings(people, person);
   findSpouse(people, person);
 }
-
-function searchByTraits(people){
-  let trait = prompt("Lets try a different approach. Search by: 'eye color', 'gender', 'dob', 'eyes and gender', 'eyes and dob', or 'gender and dob'?");
-
-  if(trait === "eye color"){
-    searchByEyeColor(people);
-    }else if(trait === "gender"){
-    searchByGender(people);
-    }else if(trait === "dob"){
-    searchByDOB(people);
-    }else if(trait === "eyes and gender"){
-    searchByEyesAndGender(people);
-    }else if(trait === "eyes and dob"){
-    searchByEyesAndDOB(people);
-    }else if(trait === "gender and dob"){
-    searchByGenderAndDOB(people);
-    }else{
-    alert("Invalid selection");
-    searchByTraits(people);
-    }
-}
-
-
