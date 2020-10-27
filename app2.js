@@ -39,6 +39,7 @@ function mainMenu(person, people){
   let displayOption = prompt("Found " + firstName + " " + lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
     switch(displayOption){
     case "info":
+      displayPerson(person)
     break;
     case "family":
       immediateFamily(person, people);
@@ -57,8 +58,9 @@ function mainMenu(person, people){
   }
 }
 
+//finds immediate family
 function immediateFamily(person, people){
-  let parents = [];
+  let parents = []; //set string to empty
   let siblings = [];
   let kids = [];
   let spouse = ""; 
@@ -92,6 +94,7 @@ function immediateFamily(person, people){
     } 
   }
 
+  //creates message block that lists 
   let message = "";
   if (parents.length > 0) {
     message = "The parents found: " +
@@ -119,6 +122,7 @@ function immediateFamily(person, people){
 
 var descendants = [];
 var counter = 0;
+
 //need to ask about recursive 
 function searchDecendants(person, people) {
   counter = 0;
@@ -126,6 +130,7 @@ function searchDecendants(person, people) {
   recursionSearch(person.id,people);
   return descendants;
 }
+
 function recursionSearch(id,people){
   //console.log(counter);
   for (let x = 0; x < people[counter].parents.length; x++) {
@@ -142,7 +147,6 @@ function recursionSearch(id,people){
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars).toLowerCase();
   let lastName = promptFor("What is the person's last name?", chars).toLowerCase();
-
   let foundPerson = people.filter(function(person){
     if(person.firstName.toLowerCase() === firstName && person.lastName.toLowerCase() === lastName){
       return true;
@@ -151,8 +155,7 @@ function searchByName(people){
       return false;
      }
     })
- 
-  return foundPerson;
+   return foundPerson;
 }
 // alerts a list of people
 function displayPeople(people){
@@ -176,7 +179,7 @@ function displayPerson(person){
   personInfo += "Eye color: " + person.eyeColor + "\n";
   personInfo += "Occupation: " + person.occupation;
 
-  alert(personInfo);
+  alert("Found person's details:" + personInfo);
   return personInfo;
 }
 
@@ -197,8 +200,8 @@ function yesNo(input){
 function chars(input){
   return true; // default validation only
 }
-
-function searchByTraits(people, searchResults = null) { //changed origional people to searchResults
+//search by trait function
+function searchByTraits(people, origionalPeople = null) {
   let searchResults = [];
   let userInput = promptFor("What trait would you like to search for? Please choose: height, weight, gender, dob, eyeColor, occcupation, parents or CurrentSpouse or done when finished.",chars)
   switch (userInput.toLowerCase()) {
@@ -304,24 +307,19 @@ function searchByEyeColor(people){
   })
     return foundPerson;
   }
-
-//search by occupation
-function searchByOccupation(people){
-  let occupation = promptFor("What is the person's occupation?", chars);
-  let foundPerson = people.filter(function(person){
-    if(person.occupation === occupation){
-
-      return true;
-    }else{
-      return false;
-    }
-  })
-  if(mySpouse.length > 0){
-    alert("Spouse: " + mySpouse[0].firstName + " " + mySpouse[0].lastName);
-  }else{
-    alert(person.firstName + " has no spouse on file.");
+  
+  //search by occupation
+  function searchByOccupation(people){
+    let occupation = promptFor("What is the person's occupation?", chars);
+    let foundPerson = people.filter(function(person){
+      if(person.occupation === occupation){
+        
+        return true;
+      }else{
+        return false;
+      }
+    })
   }
-}
 
 //search by parents
 function searchByParents(people){
@@ -333,16 +331,6 @@ function searchByParents(people){
       return false;
     }
   })
-  if(myParents.length === 0){
-    alert(person.firstName + " does not have any parents on file.")
-  }
-  for(let i = 0; i < myParents.length; i++){
-    if(myParents[i].gender === "male"){
-      alert("Father: " + myParents[i].firstName + " " + myParents[i].lastName);
-    }else{
-      alert("Mother: " + myParents[i].firstName + " " + myParents[i].lastName);
-    }
-  }
 }
 
 //search by current spouse
@@ -367,3 +355,4 @@ function findDescendants(people, person){
 }
 
 }
+
