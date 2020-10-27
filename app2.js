@@ -21,14 +21,14 @@ function app(people){
       displayPerson(searchResults);
       break;
       default:
-    app(people); // restart app
+    app(people);
       break;
   }
   //some time of logic that shows if there is more than one. if length of array if only one then send out index 0.
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
 
-function mainMenu(person, people){
 
+function mainMenu(person, people){
   let firstName = person.firstName; /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
   let lastName = person.lastName
   if(!person){
@@ -39,7 +39,6 @@ function mainMenu(person, people){
   let displayOption = prompt("Found " + firstName + " " + lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
     switch(displayOption){
     case "info":
-    
     break;
     case "family":
       immediateFamily(person, people);
@@ -199,8 +198,7 @@ function chars(input){
   return true; // default validation only
 }
 
-
-function searchByTraits(people, originalPeople = null) {
+function searchByTraits(people, searchResults = null) { //changed origional people to searchResults
   let searchResults = [];
   let userInput = promptFor("What trait would you like to search for? Please choose: height, weight, gender, dob, eyeColor, occcupation, parents or CurrentSpouse or done when finished.",chars)
   switch (userInput.toLowerCase()) {
@@ -242,6 +240,7 @@ function searchByHeight(people){
   let height = promptFor("What is the person's height?", chars);
   let foundPerson = people.filter(function(person){
     if(person.height.toString() === height){
+
       return true;
     }
     else{
@@ -251,10 +250,24 @@ function searchByHeight(people){
   return foundPerson;
 }
 
+function searchByWeight(people){
+    let weight = promptFor("What is the person's weight?", chars);
+    let foundPerson = people.filter(function(person){
+      if(person.weight.toString() === weight){
+  
+        return true;
+      }
+      else{
+        return false;
+      }
+    })
+    return foundPerson;
+  }
+
 function searchByDOB(people){
-  let DOB = promptFor("What is the person's DOB? m/d/yyyy", chars);
+  let dob = promptFor("What is the person's DOB? m/d/yyyy", chars);
   let foundPerson = people.filter(function(person){
-    if(person.weight.toString() === weight){ //string convert or ==
+    if(person.dob.toString() === dob){ 
       return true;
     }
     else{
@@ -262,27 +275,13 @@ function searchByDOB(people){
     }
   })
     return foundPerson;
-}
+  }
 
 //search by gneder
 function searchByGender(people){
   let gender = promptFor("What is the person's gender?", chars);
   let foundPerson = people.filter(function(person){
     if(person.gender === gender){
-      return true;
-    }
-    else{
-      return false;
-    }
-  })
-    return foundPerson;
-}
-
-//changed inputs to string to avoid typemismatch
-function searchByDOB(people){
-  let dob = promptFor("What is the person's dob?", chars);
-  let foundPerson = people.filter(function(person){
-    if(toString(person.dob) === toString(dob)){
       return true;
     }
     else{
@@ -304,13 +303,14 @@ function searchByEyeColor(people){
     }
   })
     return foundPerson;
-}
+  }
 
 //search by occupation
 function searchByOccupation(people){
   let occupation = promptFor("What is the person's occupation?", chars);
   let foundPerson = people.filter(function(person){
     if(person.occupation === occupation){
+
       return true;
     }else{
       return false;
@@ -363,7 +363,7 @@ function findDescendants(people, person){
       return false;
     }
   })
-  // TODO: find the person using the height they entered
-    return foundPerson;
+     return foundPerson;
 }
+
 }
