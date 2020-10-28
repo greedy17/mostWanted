@@ -26,7 +26,7 @@ function app(people){
   }
   //some time of logic that shows if there is more than one. if length of array if only one then send out index 0.
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
-
+}
 
 function mainMenu(person, people){
   let firstName = person.firstName; /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
@@ -94,12 +94,12 @@ function immediateFamily(person, people){
     } 
   }
 
-  //creates message block that lists 
+  //creates message block that lists lists parents spouse and siblings
   let message = "";
-  if (parents.length > 0) {
-    message = "The parents found: " +
-    parents.map(function(parent){
-      return parent.firstName + " " + parent.lastName;
+    if (parents.length > 0) {
+      message = "The parents found: " +
+      parents.map(function(parent){
+    return parent.firstName + " " + parent.lastName;
     }).join("\n")
   }
   if (spouse != "") {
@@ -123,7 +123,7 @@ function immediateFamily(person, people){
 var descendants = [];
 var counter = 0;
 
-//need to ask about recursive 
+//need to ask about recursive -- I think this could be done cleaner
 function searchDecendants(person, people) {
   counter = 0;
   descendants = [];
@@ -132,7 +132,6 @@ function searchDecendants(person, people) {
 }
 
 function recursionSearch(id,people){
-  //console.log(counter);
   for (let x = 0; x < people[counter].parents.length; x++) {
     if (people[counter].parents[x] === id) {
       descendants.push(people[counter]);
@@ -200,10 +199,12 @@ function yesNo(input){
 function chars(input){
   return true; // default validation only
 }
+
+
 //search by trait function
 function searchByTraits(people, origionalPeople = null) {
   let searchResults = [];
-  let userInput = promptFor("What trait would you like to search for? Please choose: height, weight, gender, dob, eyeColor, occcupation, parents or CurrentSpouse or done when finished.",chars)
+  let userInput = promptFor("What trait would you like to search for? Please choose: height, weight, gender, dob, eye color, occcupation, parents or CurrentSpouse or done when finished.",chars)
   switch (userInput.toLowerCase()) {
     case "height":
       searchResults = searchByHeight(people);
@@ -217,7 +218,7 @@ function searchByTraits(people, origionalPeople = null) {
     case "dob":
       searchResults = searchByDOB(people);
       break;
-    case "eyeColor":
+    case "eye color":
       searchResults = searchByEyeColor(people);
       break;
     case "occupation":
@@ -233,7 +234,7 @@ function searchByTraits(people, origionalPeople = null) {
       searchResults = displayPeople(people);
       break;
     default:
-      return searchByTraits(searchResults, people);
+      return searchByTraits(people); //send people instead of search results
     
   }
   return searchByTraits(searchResults, people);
@@ -298,7 +299,7 @@ function searchByGender(people){
 function searchByEyeColor(people){
   let eyeColor = promptFor("What is the person's eye color?", chars);
   let foundPerson = people.filter(function(person){
-    if(person.eyeColor === eyeColor){
+    if(person.eyeColor.toString() === eyeColor){
       return true;
     }
     else{
@@ -352,7 +353,5 @@ function findDescendants(people, person){
     }
   })
      return foundPerson;
-}
-
 }
 
