@@ -200,7 +200,7 @@ function chars(input){
   return true; // default validation only
 }
 
-
+//-------------------------------------------------------------------------------------------------------------------
 //search by trait function
 function searchByTraits(people, origionalPeople = null) {
   let searchResults = [];
