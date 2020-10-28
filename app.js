@@ -12,23 +12,9 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      let trait = promptFor("Lets try a different approach. Search by: 'eye color', 'gender', 'dob', 'eyes and gender', 'eyes and dob', or 'gender and dob'?", chars).toLowerCase();
-      if(trait === "eye color"){
-      searchResults = searchByEyeColor(people);
-      }else if(trait === "gender"){
-      searchResults = searchByGender(people);
-      }else if(trait === "dob"){
-      searchResults = searchByDOB(people);
-      }else if(trait === "eyes and gender"){
-      searchResults = searchByEyesAndGender(people);
-      }else if(trait === "eyes and dob"){
-      searchResults = searchByEyesAndDOB(people);
-      }else if(trait === "gender and dob"){
-      searchResults = searchByGenderAndDOB(people);
-      }else{
-      alert("Invalid selection");
+      searchResults = searchByTraits(people);
+      displayPeople(searchResults)
       app(people);
-      }
       break;
       default:
     app(people);
@@ -37,11 +23,8 @@ function app(people){
 
   if(searchResults.length === 1){
     searchResults = searchResults[0];
-  }else if(searchResults.length > 1){
-    alert("The following is a list of individuals that match that criteria. To view more information about one of them, please use the search by name feature.");
-    displayPeople(searchResults);
-    app(people);
-    }
+  }
+  
 
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
@@ -133,8 +116,96 @@ function chars(input){
   return true; // default validation only
 }
 
+function searchByTraits(people, origionalPeople = null) {
+  let searchResults = [];
+  let userInput = promptFor("What trait would you like to search for? Please choose: height, weight, gender, dob, eye color, occcupation, or spouse. Each time you enter a trait i'll return a list of individuals that match ALL the traits entered. Type 'done' when you are finished.",chars)
+  switch (userInput.toLowerCase()) {
+    case "height":
+      searchResults = searchByHeight(people);
+      displayPeople(searchResults);
+      break;
+    case "weight":
+      searchResults = searchByWeight(people);
+      displayPeople(searchResults);
+      break;
+    case "gender":
+      searchResults = searchByGender(people);
+      displayPeople(searchResults);
+      break;
+    case "dob":
+      searchResults = searchByDOB(people);
+      displayPeople(searchResults);
+      break;
+    case "eye color":
+      searchResults = searchByEyeColor(people);
+      displayPeople(searchResults);
+      break;
+    case "occupation":
+      searchResults = searchByOccupation(people);
+      displayPeople(searchResults);
+      break;
+    case "parents":
+      searchResults = searchByParents(people);
+      displayPeople(searchResults);
+      break;
+    case "spouse":
+      searchResults = searchByCurrentSpouse(people);
+      displayPeople(searchResults);
+      break;
+    case "done":
+      searchResults = displayPeople(people);
+      break;
+    default:
+      return searchByTraits(people); //send people instead of search results
+    
+  }
+  return searchByTraits(searchResults, people);
+}
+
+function searchByHeight(people){
+  let height = promptFor("What is the person's height?", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.height.toString() === height){
+
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  return foundPerson;
+}
+
+function searchByWeight(people){
+    let weight = promptFor("What is the person's weight?", chars);
+    let foundPerson = people.filter(function(person){
+      if(person.weight.toString() === weight){
+  
+        return true;
+      }
+      else{
+        return false;
+      }
+    })
+    return foundPerson;
+  }
+
+function searchByDOB(people){
+  let dob = promptFor("What is the person's DOB? m/d/yyyy", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.dob.toString() === dob){ 
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+    return foundPerson;
+  }
+
+//search by gneder
 function searchByGender(people){
-  let gender = promptFor("What is the person's gender?", chars).toLowerCase();
+  let gender = promptFor("What is the person's gender?", chars);
   let foundPerson = people.filter(function(person){
     if(person.gender === gender){
       return true;
@@ -143,99 +214,73 @@ function searchByGender(people){
       return false;
     }
   })
-  console.log(foundPerson);
   return foundPerson;
-
 }
 
-function searchByDOB(people){
-  let DOB = promptFor("What is the person's DOB? M/D/YYYY", chars);
-  let foundPerson = people.filter(function(person){
-    if(person.dob === DOB){
-      return true;
-    }
-    else{
-      return false;
-    }
-  })
-    if(foundPerson.length > 0){
-      return foundPerson;
-    }else{
-      alert("No one in the database matches that criteria.");
-      searchByDOB(people);
-    }
-    
-}
-
+//search by eye color
 function searchByEyeColor(people){
   let eyeColor = promptFor("What is the person's eye color?", chars);
   let foundPerson = people.filter(function(person){
-    if(person.eyeColor === eyeColor){
+    if(person.eyeColor.toString() === eyeColor){
       return true;
     }
     else{
       return false;
     }
   })
-  if(foundPerson.length > 0){
     return foundPerson;
-  }else{
-    alert("No one in the database matches that criteria.");
-    searchByEyeColor(people);
   }
+  
+  //search by occupation
+  function searchByOccupation(people){
+    let occupation = promptFor("What is the person's occupation?", chars);
+    let foundPerson = people.filter(function(person){
+      if(person.occupation === occupation){
+        
+        return true;
+      }else{
+        return false;
+      }
+    })
+
+    return foundPerson;
+  }
+
+//search by parents
+function searchByParents(people){
+  let parents = promptFor("Who are the person's parents?", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.parents === parents){
+      return true;
+    }else{
+      return false;
+    }
+  })
+
+  return foundPerson;
 }
 
-function searchByEyesAndGender(people){
-  let eyeColor = promptFor("What is the person's eye color?", chars);
-  let gender = promptFor("What is the person's gender?", chars);
+//search by current spouse
+function searchByCurrentSpouse(people){
+  let spouseFirstName = promptFor("What is the spouse's first name?", chars).toLowerCase();
+  let spouseLastName = promptFor("What is the spouse's last name?", chars).toLowerCase();
   let foundPerson = people.filter(function(person){
-    if(person.eyeColor === eyeColor && person.gender === gender){
+    if(person.firstName.toLowerCase() === spouseFirstName && person.lastName.toLowerCase() === spouseLastName){
       return true;
-    }
-    else{
+    }else{
       return false;
     }
   })
-    console.log(foundPerson);
-    return foundPerson;
-}
 
-function searchByEyesAndDOB(people){
-  let eyeColor = promptFor("What is the person's eye color?", chars);
-  let DOB = promptFor("What is the person's dob?", chars);
-  let foundPerson = people.filter(function(person){
-    if(person.eyeColor === eyeColor && person.dob === DOB){
+  let spouse = people.filter(function(person){
+    if(person.id === foundPerson[0].currentSpouse){
       return true;
-    }
-    else{
+    }else{
       return false;
     }
   })
-  if(foundPerson.length > 0){
-    return foundPerson;
-  }else{
-    alert("No one in the database matches that criteria.");
-    searchByEyesAndDOB(people);
-  }
-}
-
-function searchByGenderAndDOB(people){
-  let DOB = promptFor("What is the person's dob?", chars);
-  let gender = promptFor("What is the person's gender?", chars);
-  let foundPerson = people.filter(function(person){
-    if(person.dob === DOB && person.gender === gender){
-      return true;
-    }
-    else{
-      return false;
-    }
-  })
-  if(foundPerson.length > 0){
-    return foundPerson;
-  }else{
-    alert("No one in the database matches that criteria.");
-    searchByGenderAndDOB(people);
-  }
+  
+  return spouse;
 }
 
 function findSpouse(people, person){
